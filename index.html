@@ -2,7 +2,9 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tienda ZentraMC</title>
+
   <style>
     body {
       margin: 0;
@@ -13,68 +15,85 @@
     }
 
     header {
-      background: #111;
-      padding: 20px;
+      background: #0f0f0f;
+      padding: 15px 10px;
+      border-bottom: 2px solid #ffcc00;
+    }
+
+    h1 {
+      color: #ffcc00;
+      font-size: 22px;
+      margin: 5px 0 10px;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
     }
 
     nav a {
-      color: #00ffcc;
-      margin: 0 10px;
+      color: #ffcc00;
       text-decoration: none;
       font-weight: bold;
+      font-size: 14px;
     }
 
-    .productos {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
-      padding: 40px;
+    section {
+      padding: 20px 10px;
     }
 
     .producto {
       background: #161616;
+      border: 1px solid #ffcc00;
       border-radius: 10px;
-      padding: 20px;
+      padding: 15px;
+      margin-bottom: 15px;
     }
 
     .producto h3 {
-      color: #00ffcc;
+      color: #ffcc00;
+      margin-bottom: 5px;
     }
 
     .precio {
-      font-size: 20px;
+      font-size: 18px;
       margin: 10px 0;
     }
 
     .btn {
-      display: inline-block;
-      padding: 10px 20px;
-      background: #00ffcc;
+      display: block;
+      width: 100%;
+      padding: 12px;
+      background: #ffcc00;
       color: black;
       text-decoration: none;
-      border-radius: 5px;
+      border-radius: 6px;
       font-weight: bold;
+      font-size: 16px;
     }
 
     footer {
-      background: #111;
-      padding: 15px;
-      font-size: 14px;
+      background: #0f0f0f;
+      padding: 12px;
+      font-size: 13px;
+      border-top: 2px solid #ffcc00;
     }
   </style>
 </head>
+
 <body>
 
-<header>
+<header id="inicio">
   <h1>🛒 Tienda ZentraMC</h1>
   <nav>
-    <a href="#">Inicio</a>
+    <a href="#inicio">Inicio</a>
     <a href="#tienda">Tienda</a>
-    <a href="#">Discord</a>
+    <a href="https://discord.gg/TUINVITE" target="_blank">Discord</a>
   </nav>
 </header>
 
-<section id="tienda" class="productos">
+<section id="tienda">
   <div class="producto">
     <h3>Rango VIP</h3>
     <p>Beneficios básicos</p>
