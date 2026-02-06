@@ -1,725 +1,137 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZentraMC - Asistente Virtual IA</title>
-    <link href="https://fonts.googleapis.com/css2?family=VT323&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
-    <style>
-        /* ===== VARIABLES CSS ===== */
-        :root {
-            --color-bg: #161616;
-            --color-zentra: #F5D742;
-            --color-mc: #FFFFFF;
-            --color-subtitle: #5BAA64;
-            --color-border: #E7AC44;
-            --color-msg-bg: #1D4022;
-            --color-msg-border: #297228;
-            --color-text: #FFFFFF;
-            --color-placeholder: #8B8C8C;
-            --color-user-msg: #1a2332;
-            --color-user-border: #3d5a80;
-        }
-
-        /* ===== RESET Y BASE ===== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: var(--color-bg);
-            color: var(--color-text);
-            min-height: 100vh;
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        /* ===== FONDO CON ESTRELLAS ANIMADAS ===== */
-        .stars-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .star {
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-            opacity: 0.8;
-            animation: twinkle linear infinite;
-        }
-
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.3; transform: scale(1); }
-            50% { opacity: 0.9; transform: scale(1.2); }
-        }
-
-        /* ===== HEADER ===== */
-        header {
-            position: relative;
-            z-index: 10;
-            text-align: center;
-            padding: 2rem 1rem 1rem;
-        }
-
-        .logo-title {
-            font-family: 'VT323', monospace;
-            font-size: clamp(2.5rem, 8vw, 4rem);
-            font-style: italic;
-            margin-bottom: 0.5rem;
-            letter-spacing: 2px;
-        }
-
-        .zentra {
-            color: var(--color-zentra);
-            text-shadow: 
-                0 0 10px var(--color-zentra),
-                0 0 20px var(--color-zentra),
-                0 0 30px var(--color-zentra),
-                0 0 40px rgba(245, 215, 66, 0.5);
-            animation: pulseYellow 3s ease-in-out infinite;
-        }
-
-        .mc {
-            color: var(--color-mc);
-            text-shadow: 
-                0 0 8px var(--color-mc),
-                0 0 15px var(--color-mc),
-                0 0 25px rgba(255, 255, 255, 0.5);
-            animation: pulseWhite 3s ease-in-out infinite;
-        }
-
-        @keyframes pulseYellow {
-            0%, 100% { text-shadow: 0 0 10px var(--color-zentra), 0 0 20px var(--color-zentra); }
-            50% { text-shadow: 0 0 20px var(--color-zentra), 0 0 30px var(--color-zentra), 0 0 40px var(--color-zentra); }
-        }
-
-        @keyframes pulseWhite {
-            0%, 100% { text-shadow: 0 0 8px var(--color-mc), 0 0 15px var(--color-mc); }
-            50% { text-shadow: 0 0 15px var(--color-mc), 0 0 25px var(--color-mc), 0 0 35px rgba(255, 255, 255, 0.7); }
-        }
-
-        .subtitle {
-            font-family: 'VT323', monospace;
-            font-size: clamp(1rem, 3vw, 1.5rem);
-            color: var(--color-subtitle);
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            text-shadow: 0 0 10px rgba(91, 170, 100, 0.6);
-        }
-
-        /* ===== NAVEGACIÓN ===== */
-        nav {
-            position: relative;
-            z-index: 10;
-            background: rgba(22, 22, 22, 0.8);
-            backdrop-filter: blur(10px);
-            border-bottom: 2px solid var(--color-border);
-            padding: 0.5rem 0;
-            margin-bottom: 2rem;
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 1rem;
-            flex-wrap: wrap;
-            padding: 0 1rem;
-        }
-
-        .nav-link {
-            font-family: 'VT323', monospace;
-            font-size: 1.2rem;
-            color: var(--color-text);
-            text-decoration: none;
-            padding: 0.5rem 1.5rem;
-            border: 2px solid transparent;
-            border-radius: 5px;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
-        }
-
-        .nav-link:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: var(--color-border);
-            transition: left 0.3s ease;
-            z-index: -1;
-        }
-
-        .nav-link:hover {
-            color: #000;
-            border-color: var(--color-border);
-        }
-
-        .nav-link:hover:before {
-            left: 0;
-        }
-
-        .nav-link.active {
-            background: var(--color-border);
-            color: #000;
-            border-color: var(--color-border);
-        }
-
-        .nav-link.shop-link {
-            background: linear-gradient(135deg, #2ecc71, #27ae60);
-            color: #fff;
-            border-color: #27ae60;
-            font-weight: bold;
-        }
-
-        .nav-link.shop-link:hover {
-            background: linear-gradient(135deg, #27ae60, #229954);
-        }
-
-        .admin-btn {
-            background: transparent;
-            border: 2px solid #e74c3c;
-            color: #e74c3c;
-            font-family: 'VT323', monospace;
-            font-size: 1.2rem;
-            padding: 0.5rem 1.5rem;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-left: auto;
-        }
-
-        .admin-btn:hover {
-            background: #e74c3c;
-            color: #fff;
-        }
-
-        .menu-toggle {
-            display: none;
-            background: none;
-            border: 2px solid var(--color-border);
-            color: var(--color-border);
-            font-family: 'VT323', monospace;
-            font-size: 1.5rem;
-            padding: 0.5rem 1rem;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: all 0.3s ease;
-        }
-
-        .menu-toggle:hover {
-            background: var(--color-border);
-            color: #000;
-        }
-
-        /* ===== PÁGINAS/SECCIONES ===== */
-        .page {
-            display: none;
-            position: relative;
-            z-index: 10;
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 0 1rem 2rem;
-            animation: fadeInPage 0.5s ease;
-        }
-
-        .page.active {
-            display: block;
-        }
-
-        @keyframes fadeInPage {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .section-title {
-            font-family: 'VT323', monospace;
-            font-size: 2.5rem;
-            color: var(--color-zentra);
-            text-align: center;
-            margin-bottom: 2rem;
-            text-shadow: 0 0 10px rgba(245, 215, 66, 0.5);
-        }
-
-        .info-box {
-            background: rgba(0, 0, 0, 0.6);
-            border: 2px solid var(--color-border);
-            border-radius: 10px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            backdrop-filter: blur(5px);
-        }
-
-        .info-box p {
-            line-height: 1.8;
-            margin-bottom: 1rem;
-            color: rgba(255, 255, 255, 0.9);
-        }
-
-        .info-box ul {
-            list-style: none;
-            padding-left: 1rem;
-        }
-
-        .info-box li {
-            padding: 0.5rem 0;
-            position: relative;
-            padding-left: 1.5rem;
-        }
-
-        .info-box li:before {
-            content: '▸';
-            color: var(--color-zentra);
-            position: absolute;
-            left: 0;
-            font-weight: bold;
-        }
-
-        /* ===== EDITABLE CONTENT ===== */
-        .editable-content {
-            position: relative;
-        }
-
-        .edit-content-btn {
-            display: none;
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            font-family: 'VT323', monospace;
-            font-size: 0.9rem;
-            padding: 0.4rem 1rem;
-            background: transparent;
-            border: 2px solid var(--color-border);
-            color: var(--color-border);
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            z-index: 5;
-        }
-
-        .edit-content-btn:hover {
-            background: var(--color-border);
-            color: #000;
-        }
-
-        /* ===== POST CARD ===== */
-        .post-card {
-            background: rgba(0, 0, 0, 0.6);
-            border: 2px solid var(--color-msg-border);
-            border-radius: 10px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .post-card:hover {
-            border-color: var(--color-border);
-            transform: translateY(-3px);
-            box-shadow: 0 5px 20px rgba(231, 172, 68, 0.3);
-        }
-
-        .post-title {
-            font-family: 'VT323', monospace;
-            font-size: 1.8rem;
-            color: var(--color-zentra);
-            margin-bottom: 0.5rem;
-        }
-
-        .post-date {
-            font-size: 0.9rem;
-            color: var(--color-placeholder);
-            margin-bottom: 1rem;
-        }
-
-        .post-content {
-            line-height: 1.8;
-            color: rgba(255, 255, 255, 0.9);
-            white-space: pre-wrap;
-        }
-
-        .post-actions {
-            margin-top: 1rem;
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .edit-btn, .delete-btn {
-            font-family: 'VT323', monospace;
-            font-size: 0.9rem;
-            padding: 0.4rem 1rem;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 2px solid;
-        }
-
-        .edit-btn {
-            background: transparent;
-            border-color: var(--color-border);
-            color: var(--color-border);
-        }
-
-        .edit-btn:hover {
-            background: var(--color-border);
-            color: #000;
-        }
-
-        .delete-btn {
-            background: transparent;
-            border-color: #e74c3c;
-            color: #e74c3c;
-        }
-
-        .delete-btn:hover {
-            background: #e74c3c;
-            color: #fff;
-        }
-
-        /* ===== CHAT CONTAINER ===== */
-        .chat-container {
-            background: rgba(0, 0, 0, 0.7);
-            border: 4px solid var(--color-border);
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 
-                0 0 20px rgba(231, 172, 68, 0.3),
-                inset 0 0 30px rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(10px);
-        }
-
-        .chat-header {
-            background: linear-gradient(135deg, rgba(231, 172, 68, 0.2), rgba(91, 170, 100, 0.2));
-            padding: 1rem;
-            border-bottom: 2px solid var(--color-border);
-            text-align: center;
-        }
-
-        .chat-header h2 {
-            font-family: 'VT323', monospace;
-            font-size: 1.5rem;
-            color: var(--color-text);
-        }
-
-        .chat-status {
-            font-size: 0.9rem;
-            color: var(--color-subtitle);
-            margin-top: 0.3rem;
-        }
-
-        .status-dot {
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            background: var(--color-subtitle);
-            border-radius: 50%;
-            margin-right: 5px;
-            animation: blink 1.5s infinite;
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
-        }
-
-        .chat-area {
-            height: 400px;
-            overflow-y: auto;
-            padding: 1.5rem;
-            background: rgba(0, 0, 0, 0.3);
-            scroll-behavior: smooth;
-        }
-
-        .chat-area::-webkit-scrollbar {
-            width: 10px;
-        }
-
-        .chat-area::-webkit-scrollbar-track {
-            background: rgba(0, 0, 0, 0.3);
-        }
-
-        .chat-area::-webkit-scrollbar-thumb {
-            background: var(--color-border);
-            border-radius: 5px;
-        }
-
-        .chat-area::-webkit-scrollbar-thumb:hover {
-            background: var(--color-zentra);
-        }
-
-        .message {
-            margin-bottom: 1.5rem;
-            animation: slideIn 0.4s ease;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        .message.user {
-            text-align: right;
-        }
-
-        .message.user .message-bubble {
-            background: var(--color-user-msg);
-            border: 2px solid var(--color-user-border);
-            margin-left: auto;
-        }
-
-        .message-sender {
-            font-family: 'VT323', monospace;
-            font-size: 1.1rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .bot-sender .zentra-name {
-            color: var(--color-zentra);
-            text-shadow: 0 0 5px var(--color-zentra);
-        }
-
-        .bot-sender .mc-name {
-            color: var(--color-mc);
-        }
-
-        .user-sender {
-            color: #64B5F6;
-        }
-
-        .message-bubble {
-            background: var(--color-msg-bg);
-            border: 2px solid var(--color-msg-border);
-            border-radius: 10px;
-            padding: 1rem;
-            max-width: 85%;
-            display: inline-block;
-            text-align: left;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        .message-text {
-            line-height: 1.6;
-            color: var(--color-text);
-        }
-
-        .message-time {
-            font-size: 0.75rem;
-            color: var(--color-placeholder);
-            margin-top: 0.5rem;
-            display: block;
-        }
-
-        .typing-indicator {
-            display: none;
-            padding: 1rem;
-            background: var(--color-msg-bg);
-            border: 2px solid var(--color-msg-border);
-            border-radius: 10px;
-            max-width: 80px;
-            margin-bottom: 1rem;
-        }
-
-        .typing-indicator.active {
-            display: inline-block;
-            animation: slideIn 0.4s ease;
-        }
-
-        .typing-dots {
-            display: flex;
-            gap: 5px;
-            justify-content: center;
-        }
-
-        .typing-dots span {
-            width: 8px;
-            height: 8px;
-            background: var(--color-border);
-            border-radius: 50%;
-            animation: typingDot 1.4s infinite;
-        }
-
-        .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
-        .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
-
-        @keyframes typingDot {
-            0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
-            30% { transform: translateY(-10px); opacity: 1; }
-        }
-
-        .chat-input-area {
-            padding: 1rem;
-            background: rgba(0, 0, 0, 0.5);
-            border-top: 2px solid var(--color-border);
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        #chatInput {
-            flex: 1;
-            background: rgba(0, 0, 0, 0.7);
-            border: 2px solid rgba(231, 172, 68, 0.3);
-            border-radius: 8px;
-            padding: 0.8rem 1rem;
-            color: var(--color-text);
-            font-size: 1rem;
-            font-family: 'Roboto', sans-serif;
-            outline: none;
-            transition: all 0.3s ease;
-        }
-
-        #chatInput:focus {
-            border-color: var(--color-border);
-            box-shadow: 0 0 10px rgba(231, 172, 68, 0.3);
-        }
-
-        #chatInput::placeholder {
-            color: var(--color-placeholder);
-            font-family: 'VT323', monospace;
-        }
-
-        #sendBtn {
-            background: transparent;
-            border: 2px solid var(--color-border);
-            color: var(--color-border);
-            font-family: 'VT323', monospace;
-            font-size: 1.2rem;
-            padding: 0.8rem 2rem;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        #sendBtn:hover {
-            background: var(--color-border);
-            color: #000;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(231, 172, 68, 0.4);
-        }
-
-        #sendBtn:active {
-            transform: translateY(0);
-        }
-
-        /* ===== FEATURES GRID ===== */
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-
-        .feature-card {
-            background: rgba(0, 0, 0, 0.6);
-            border: 2px solid var(--color-msg-border);
-            border-radius: 10px;
-            padding: 1.5rem;
-            text-align: center;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--color-border);
-            box-shadow: 0 5px 20px rgba(231, 172, 68, 0.3);
-        }
-
-        .feature-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .feature-title {
-            font-family: 'VT323', monospace;
-            font-size: 1.5rem;
-            color: var(--color-zentra);
-            margin-bottom: 0.5rem;
-        }
-
-        .feature-desc {
-            color: rgba(255, 255, 255, 0.8);
-            line-height: 1.6;
-        }
-
-        /* ===== SOCIAL MEDIA SECTION ===== */
-        .social-media {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-            margin: 2rem 0;
-        }
-
-        .social-link {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.5rem;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            text-decoration: none;
-        }
-
-        .social-icon {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            transition: all 0.3s ease;
-            border: 3px solid transparent;
-        }
-
-        .social-link:hover .social-icon {
-            transform: translateY(-5px) scale(1.1);
-            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.3);
-        }
-
-        .social-discord { background: #5865F2; border-color: #5865F2; }
-        .social-facebook { background: #1877F2; border-color: #1877F2; }
-        .social-youtube { background: #FF0000; border-color: #FF0000; }
-        .social-tiktok { background: #000000; border-color: #00F2EA; }
-
-        .social-label {
-            font-family: 'VT323', monospace;
-            font-size: 1rem;
-            color: var(--color-text);
-        }
-
-        .social-edit-btn {
-            display: none;
-            font-family: 'VT323', monospace;
-            font-size: 0.8rem;
-            padding: 0.3rem 0.8rem;
-            background: transpar
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZentraMC Tienda</title>
+
+<style>
+body{
+  margin:0;
+  font-family: Arial, sans-serif;
+  background:#0e0e0e;
+  color:white;
+}
+
+/* HEADER */
+header{
+  background:#f5c400;
+  color:black;
+  padding:15px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.menu-btn{
+  font-size:26px;
+  cursor:pointer;
+}
+
+/* MENU */
+nav{
+  display:none;
+  background:#1a1a1a;
+}
+
+nav a{
+  display:block;
+  padding:15px;
+  color:white;
+  text-decoration:none;
+  border-bottom:1px solid #333;
+}
+
+nav a:hover{
+  background:#f5c400;
+  color:black;
+}
+
+/* SECTIONS */
+section{
+  padding:20px;
+}
+
+.card{
+  background:#1c1c1c;
+  border-radius:12px;
+  padding:15px;
+  margin-bottom:15px;
+}
+
+.price{
+  color:#f5c400;
+  font-size:18px;
+  margin:8px 0;
+}
+
+.cart-btn{
+  background:#f5c400;
+  color:black;
+  border:none;
+  width:100%;
+  padding:12px;
+  border-radius:10px;
+  font-size:16px;
+  cursor:pointer;
+}
+
+.cart-btn:hover{
+  background:#ffd83d;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <strong>ZentraMC Store</strong>
+  <div class="menu-btn" onclick="toggleMenu()">☰</div>
+</header>
+
+<nav id="menu">
+  <a href="#ranks">Ranks+++</a>
+  <a href="#unban">Unban</a>
+</nav>
+
+<section id="ranks">
+  <h2>🏆 Ranks+++</h2>
+
+  <div class="card">
+    <h3>Dios</h3>
+    <div class="price">€5.99</div>
+    <button class="cart-btn">Add to cart</button>
+  </div>
+
+  <div class="card">
+    <h3>Emperador</h3>
+    <div class="price">€7.11</div>
+    <button class="cart-btn">Add to cart</button>
+  </div>
+
+  <div class="card">
+    <h3>Zeus</h3>
+    <div class="price">€10.15</div>
+    <button class="cart-btn">Add to cart</button>
+  </div>
+</section>
+
+<section id="unban">
+  <h2>🔓 Comprar Unban</h2>
+
+  <div class="card">
+    <p>Desbaneo para volver a jugar en el servidor</p>
+    <div class="price">€5.00</div>
+    <button class="cart-btn">Add to cart</button>
+  </div>
+</section>
+
+<script>
+function toggleMenu(){
+  const menu = document.getElementById("menu");
+  menu.style.display = menu.style.display === "block" ? "none" : "block";
+}
+</script>
+
+</body>
+</html>
