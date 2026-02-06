@@ -1,123 +1,201 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tienda ZentraMC</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tienda ZentraMC</title>
+<style>
+/* --- ESTILO GENERAL --- */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0b0b0b;
+  color: white;
+  text-align: center;
+  overflow-x: hidden;
+}
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0b0b0b;
-      color: white;
-      text-align: center;
-    }
+/* --- ESTRELLAS ANIMADAS --- */
+@keyframes moverEstrellas {
+  0% {transform: translateY(0);}
+  100% {transform: translateY(-1000px);}
+}
+.stars {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 2000px;
+  background: transparent url('https://i.ibb.co/yqKp1tG/estrellas.png') repeat;
+  animation: moverEstrellas 60s linear infinite;
+  z-index: -1;
+}
 
-    header {
-      background: #0f0f0f;
-      padding: 15px 10px;
-      border-bottom: 2px solid #ffcc00;
-    }
+/* --- HEADER / MENU --- */
+header {
+  background: #111;
+  padding: 15px;
+  border-bottom: 3px solid #ffcc00;
+}
+header h1 {
+  color: #ffcc00;
+  font-size: 22px;
+  margin: 5px 0;
+}
+nav {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+nav a {
+  color: #ffcc00;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 14px;
+}
 
-    h1 {
-      color: #ffcc00;
-      font-size: 22px;
-      margin: 5px 0 10px;
-    }
+/* --- SECCIONES --- */
+section {
+  padding: 20px 10px;
+}
+.producto, .rank {
+  background: #161616;
+  border: 2px solid #ffcc00;
+  border-radius: 12px;
+  padding: 15px;
+  margin-bottom: 15px;
+  position: relative;
+  overflow: hidden;
+}
 
-    nav {
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-    }
+/* --- ARMAS ANIMADAS --- */
+.armas {
+  width: 50px;
+  animation: moverArma 3s infinite alternate;
+  margin: 0 auto 10px;
+}
+@keyframes moverArma {
+  0% {transform: translateY(0px);}
+  50% {transform: translateY(-10px);}
+  100% {transform: translateY(0px);}
+}
 
-    nav a {
-      color: #ffcc00;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 14px;
-    }
+/* --- TITULOS Y PRECIOS --- */
+.producto h3, .rank h3 { color: #ffcc00; margin-bottom:5px; }
+.precio { font-size: 18px; margin: 8px 0; }
+.btn {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  background: #ffcc00;
+  color: black;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 16px;
+}
 
-    section {
-      padding: 20px 10px;
-    }
+/* --- FOOTER --- */
+footer {
+  background: #111;
+  padding: 12px;
+  font-size: 13px;
+  border-top: 2px solid #ffcc00;
+}
 
-    .producto {
-      background: #161616;
-      border: 1px solid #ffcc00;
-      border-radius: 10px;
-      padding: 15px;
-      margin-bottom: 15px;
-    }
-
-    .producto h3 {
-      color: #ffcc00;
-      margin-bottom: 5px;
-    }
-
-    .precio {
-      font-size: 18px;
-      margin: 10px 0;
-    }
-
-    .btn {
-      display: block;
-      width: 100%;
-      padding: 12px;
-      background: #ffcc00;
-      color: black;
-      text-decoration: none;
-      border-radius: 6px;
-      font-weight: bold;
-      font-size: 16px;
-    }
-
-    footer {
-      background: #0f0f0f;
-      padding: 12px;
-      font-size: 13px;
-      border-top: 2px solid #ffcc00;
-    }
-  </style>
+/* --- RESPONSIVE MOBILE --- */
+@media(max-width:600px){
+  nav { flex-direction: column; }
+  .armas { width: 40px; }
+}
+</style>
 </head>
-
 <body>
 
+<div class="stars"></div>
+
 <header id="inicio">
-  <h1>🛒 Tienda ZentraMC</h1>
-  <nav>
-    <a href="#inicio">Inicio</a>
-    <a href="#tienda">Tienda</a>
-    <a href="https://discord.gg/TUINVITE" target="_blank">Discord</a>
-  </nav>
+<h1>🛒 Tienda ZentraMC</h1>
+<nav>
+<a href="#inicio">Inicio</a>
+<a href="#ranks">RanksMejores+++</a>
+<a href="#unban">Unban</a>
+<a href="https://discord.gg/sQzNxXJu2D" target="_blank">Discord</a>
+<a href="#admin">🔒 Admin</a>
+</nav>
 </header>
 
-<section id="tienda">
-  <div class="producto">
-    <h3>Rango VIP</h3>
-    <p>Beneficios básicos</p>
-    <div class="precio">$2.99</div>
-    <a class="btn" href="#">Comprar</a>
-  </div>
+<!-- SECCIÓN RANGOS INICIO -->
+<section id="inicio-rangos">
+<h2>Rangos Inicio</h2>
+<div class="producto">
+<img class="armas" src="https://i.ibb.co/mcJ8R2J/arco-encantado.png" alt="VIP">
+<h3>VIP</h3>
+<div class="precio">1.40€</div>
+<a class="btn" href="#">Add to Cart</a>
+</div>
+<div class="producto">
+<img class="armas" src="https://i.ibb.co/tmZrptn/totem.png" alt="MVP">
+<h3>MVP</h3>
+<div class="precio">2.30€</div>
+<a class="btn" href="#">Add to Cart</a>
+</div>
+<div class="producto">
+<img class="armas" src="https://i.ibb.co/0nZL3Np/maza.png" alt="VIP+">
+<h3>VIP+</h3>
+<div class="precio">3.10€</div>
+<a class="btn" href="#">Add to Cart</a>
+</div>
+<div class="producto">
+<img class="armas" src="https://i.ibb.co/Fm7jWfS/espada-netherite.png" alt="MVP+">
+<h3>MVP+</h3>
+<div class="precio">4.50€</div>
+<a class="btn" href="#">Add to Cart</a>
+</div>
+</section>
 
-  <div class="producto">
-    <h3>Rango MVP</h3>
-    <p>Más comandos y perks</p>
-    <div class="precio">$5.99</div>
-    <a class="btn" href="#">Comprar</a>
-  </div>
+<!-- SECCIÓN RANKS MEJORES+++ -->
+<section id="ranks">
+<h2>RanksMejores+++</h2>
+<div class="rank">
+<img class="armas" src="https://i.ibb.co/9r7w3pD/tridente.png" alt="Dios">
+<h3>Dios</h3>
+<div class="precio">5.99€</div>
+<a class="btn" href="#">Add to Cart</a>
+</div>
+<div class="rank">
+<img class="armas" src="https://i.ibb.co/PhvCz9T/espada-diamante.png" alt="Emperador">
+<h3>Emperador</h3>
+<div class="precio">7.11€</div>
+<a class="btn" href="#">Add to Cart</a>
+</div>
+<div class="rank">
+<img class="armas" src="https://i.ibb.co/yfGyq9H/lanza-oro.png" alt="Zeus">
+<h3>Zeus</h3>
+<div class="precio">10.15€</div>
+<a class="btn" href="#">Add to Cart</a>
+</div>
+</section>
 
-  <div class="producto">
-    <h3>Rango LEGEND</h3>
-    <p>Acceso total</p>
-    <div class="precio">$9.99</div>
-    <a class="btn" href="#">Comprar</a>
-  </div>
+<!-- SECCIÓN UNBAN -->
+<section id="unban">
+<h2>Unban</h2>
+<div class="producto">
+<h3>Comprar Unban</h3>
+<div class="precio">5€</div>
+<a class="btn" href="#">Add to Cart</a>
+</div>
+</section>
+
+<!-- SECCIÓN ADMIN -->
+<section id="admin">
+<h2 style="color:red;">🔒 Admin Panel</h2>
+<p>Usuario: AlexisStormXD</p>
+<p>Contraseña: AdminPanel</p>
+<p>(Funcionalidad de permisos e historial requiere backend)</p>
 </section>
 
 <footer>
-  © 2026 ZentraMC • Todos los derechos reservados
+© 2026 ZentraMC • Todos los derechos reservados
 </footer>
 
 </body>
