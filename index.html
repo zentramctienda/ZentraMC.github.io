@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Tienda ZentraMC</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0b0b0b;
+      color: white;
+      text-align: center;
+    }
+
+    header {
+      background: #111;
+      padding: 20px;
+    }
+
+    nav a {
+      color: #00ffcc;
+      margin: 0 10px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .productos {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      padding: 40px;
+    }
+
+    .producto {
+      background: #161616;
+      border-radius: 10px;
+      padding: 20px;
+    }
+
+    .producto h3 {
+      color: #00ffcc;
+    }
+
+    .precio {
+      font-size: 20px;
+      margin: 10px 0;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      background: #00ffcc;
+      color: black;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+
+    footer {
+      background: #111;
+      padding: 15px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>🛒 Tienda ZentraMC</h1>
+  <nav>
+    <a href="#">Inicio</a>
+    <a href="#tienda">Tienda</a>
+    <a href="#">Discord</a>
+  </nav>
+</header>
+
+<section id="tienda" class="productos">
+  <div class="producto">
+    <h3>Rango VIP</h3>
+    <p>Beneficios básicos</p>
+    <div class="precio">$2.99</div>
+    <a class="btn" href="#">Comprar</a>
+  </div>
+
+  <div class="producto">
+    <h3>Rango MVP</h3>
+    <p>Más comandos y perks</p>
+    <div class="precio">$5.99</div>
+    <a class="btn" href="#">Comprar</a>
+  </div>
+
+  <div class="producto">
+    <h3>Rango LEGEND</h3>
+    <p>Acceso total</p>
+    <div class="precio">$9.99</div>
+    <a class="btn" href="#">Comprar</a>
+  </div>
+</section>
+
+<footer>
+  © 2026 ZentraMC • Todos los derechos reservados
+</footer>
+
+</body>
+  </html>
